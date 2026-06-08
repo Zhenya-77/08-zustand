@@ -10,6 +10,21 @@ interface NoteDetailsProps {
   params: Promise<{ id: string }>;
 }
 
+export async function generateMetadata({ params }: NoteDetailsProps) {
+  const { id } = await params;
+  const note = await fetchNoteById(id);
+  return {
+    title: note.title,
+    description: note.content.slice(0, 30),
+    openGraph: {
+      title: `Note: ${note.title}`,
+      description: note.content.slice(0, 100),
+      url: `https://notehub.com/notes/${id}`,
+      images: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+    },
+  };
+}
+
 async function NoteDetails({ params }: NoteDetailsProps) {
   const { id } = await params;
   const queryClient = new QueryClient();

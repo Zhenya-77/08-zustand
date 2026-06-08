@@ -1,4 +1,16 @@
+import { Metadata } from "next";
 import css from "./page.module.css";
+
+export const metadata: Metadata = {
+  title: "NotFound",
+  description: "This page is not found",
+  openGraph: {
+    title: "NotFound",
+    description: "This page is not found",
+    url: "/notes",
+    images: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+  },
+};
 
 function NotFound() {
   return (

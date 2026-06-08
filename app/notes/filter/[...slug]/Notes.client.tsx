@@ -10,6 +10,7 @@ import Pagination from "@/components/Pagination/Pagination";
 import NoteList from "@/components/NoteList/NoteList";
 import Modal from "@/components/Modal/Modal";
 import NoteForm from "@/components/NoteForm/NoteForm";
+import { useRouter } from "next/navigation";
 
 interface NotesClientProps {
   tag?: string;
@@ -19,6 +20,7 @@ const NotesClient = ({ tag }: NotesClientProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const router = useRouter();
 
   const [deboucedValue] = useDebounce(inputValue, 300);
 
@@ -42,6 +44,8 @@ const NotesClient = ({ tag }: NotesClientProps) => {
     setCurrentPage(1);
   };
 
+  const createNote = () => router.push("/notes/action/create");
+
   const totalPages = data?.totalPages ?? 0;
   return (
     <div className={css.app}>
@@ -54,16 +58,12 @@ const NotesClient = ({ tag }: NotesClientProps) => {
             onPageChange={setCurrentPage}
           />
         )}
-        <button onClick={openModal} className={css.button}>
+        <button onClick={createNote} className={css.button}>
           Create note +
         </button>
       </header>
       {isSuccess && data.notes.length > 0 && <NoteList notes={data.notes} />}
-      {isOpenModal && (
-        <Modal closeModal={closeModal}>
-          {<NoteForm closeModal={closeModal} />}
-        </Modal>
-      )}
+      {isOpenModal && <Modal closeModal={closeModal}>{<NoteForm />}</Modal>}
     </div>
   );
 };
