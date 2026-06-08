@@ -5,12 +5,13 @@ import {
 } from "@tanstack/react-query";
 import NotesClient from "./Notes.client";
 import { fetchNotes } from "@/lib/api";
+import { Metadata } from "next";
 
 interface Props {
   params: Promise<{ slug: string[] }>;
 }
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const category = slug[0] === "all" ? "All Notes" : slug[0];
 
@@ -34,7 +35,9 @@ export async function generateMetadata({ params }: Props) {
       title: `Note: ${title}`,
       description: description,
       url: url,
-      images: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+      images: [
+        { url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg" },
+      ],
     },
   };
 }

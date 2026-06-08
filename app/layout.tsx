@@ -18,7 +18,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Notes",
     description: "Create and save your notes",
-    images: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+    url: "https://08-zustand-weld-psi.vercel.app/",
+    images: [
+      {
+        url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+      },
+    ],
   },
 };
 

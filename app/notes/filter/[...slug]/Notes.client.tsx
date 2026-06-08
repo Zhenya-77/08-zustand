@@ -8,8 +8,6 @@ import { useDebounce } from "use-debounce";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import Pagination from "@/components/Pagination/Pagination";
 import NoteList from "@/components/NoteList/NoteList";
-import Modal from "@/components/Modal/Modal";
-import NoteForm from "@/components/NoteForm/NoteForm";
 import { useRouter } from "next/navigation";
 
 interface NotesClientProps {
@@ -18,7 +16,6 @@ interface NotesClientProps {
 
 const NotesClient = ({ tag }: NotesClientProps) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [isOpenModal, setIsOpenModal] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const router = useRouter();
 
@@ -30,14 +27,6 @@ const NotesClient = ({ tag }: NotesClientProps) => {
       fetchNotes({ page: currentPage, searchQuery: deboucedValue, tag }),
     placeholderData: keepPreviousData,
   });
-
-  const openModal = () => {
-    setIsOpenModal(true);
-  };
-
-  const closeModal = () => {
-    setIsOpenModal(false);
-  };
 
   const handleSearch = (value: string) => {
     setInputValue(value);
@@ -63,7 +52,6 @@ const NotesClient = ({ tag }: NotesClientProps) => {
         </button>
       </header>
       {isSuccess && data.notes.length > 0 && <NoteList notes={data.notes} />}
-      {isOpenModal && <Modal closeModal={closeModal}>{<NoteForm />}</Modal>}
     </div>
   );
 };
